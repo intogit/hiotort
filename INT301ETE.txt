@@ -1,0 +1,504 @@
+					calculator.sh
+
+#!/bin/bash
+read -p "enter number a: " a
+read -p "enter nmber b: " b
+echo "sum is:"
+expr $a + $bs
+echo "mul is: "
+expr $a \* $b
+echo "div is:   "
+x=$(( $a / $b ))
+echo $x
+echo "sub is:"
+let "y=a-b"
+echo $y
+
+
+					NESTED IF
+
+#!/bin/bash
+
+echo -n "enter first number"
+read var1
+echo -n  "enter second number"
+read var2
+echo -n "enter third number"
+read var3
+
+if [[ $var1 -ge $var2 ]]
+then
+if(($var1>=$var3))
+then
+echo "$var1 is largest"
+else
+	echo "$var3 is largest"
+fi
+else
+if [[ $var2 -ge $var3 ]]
+then
+echo "$var2 is largest"
+else
+echo "$var3 is largest"
+fi
+fi
+
+
+	
+					STRING EQUAL						
+
+#!/bin/bash
+read -p "enter string 1: " s1
+read -p "enter string 2: " s2
+if [[ -n $s1 ]]
+then
+echo "s1 is not empty"
+fi
+if [[ -n $s2 ]]
+then
+echo "s2 is not emty"
+fi
+
+if [[ $s1 = $s2 ]] && [[ -n $s1 ]]
+# && [[ -n $2 ]]
+then
+echo "equal"
+else
+echo "not equal"
+fi
+
+
+
+
+					FILE TEST
+#!/bin/bash
+read -p "enter file loc" file
+if [[ -e $file ]]
+then
+echo "file exist"
+echo "checking for directory........."
+if [[ -d $file ]]
+then
+echo "it is directory"
+else
+echo "its not A DIRECTORY"
+fi
+else
+echo "file does not exist"
+fi
+
+
+
+					RETIRE.SH
+#!/bin/bash
+
+read -p "Enter year of work: "years
+if [[ $year -lt 20 ]]
+then
+echo "you can not retire now"
+else
+echo "you can retire"
+fi
+
+
+
+
+				FOR LOOS
+#!/bin/bash
+for i in 1 2 3 4 5
+do
+   echo "Welcome $i times"
+done
+
+
+#!/bin/bash
+for i in {1..5}
+do
+   echo "Welcome $i times"
+done
+	
+
+#!/bin/bash
+echo "Bash version ${BASH_VERSION}..."
+#increment by 2 each iteration
+for i in {0..10..2}
+do
+  echo "Welcome $i times"
+done	
+
+
+for (( c=1; c<=5; c++ ))
+do 
+   echo "Welcome $c times"
+done
+
+
+for i in $@
+do
+    echo "Script arg is $i"
+done
+
+
+#break continue in loos
+#!/bin/bash
+FILES="$@"
+for f in $FILES
+do
+        # if .bak backup file exists, read next file
+    if [ -f ${f}.bak ]
+    then
+        echo "Skiping $f file..."
+        continue  # read next file and skip the cp command
+    fi
+        # we are here means no backup file exists, just use cp command to copy file
+    /bin/cp $f $f.bak
+done
+
+
+
+
+
+					CASE STATEMENT
+
+  GNU nano 6.2                               case.sh                                         #!/bin/bash
+echo "traffic color details"
+echo "1-green"
+echo "2-red"
+echo "3-yellow"
+read color
+case $color in
+1) echo "green means go ahead";;
+2) echo "red means to sto";;
+3) echo "yellow means to get ready to go";;
+*) echo "enter valiid color";;
+esac
+
+
+
+
+
+						FUNCTIONS
+#!/bin/bash
+fun()
+{
+echo "hello world $1 $2"
+}
+fun ninja kumar
+ 
+=============================
+
+Display1()
+{ 
+x=10
+y=10
+c=$[$x+$y]
+echo “sum is : $c”
+}
+Display1
+
+==============================
+
+#returning fxn
+display() 
+{ 
+echo "Hello World $1 $2" 
+return 10 
+}
+# Invoke your function 
+display Rishi Rahul
+# Capture value returnd by last command 
+ret=$?
+echo "Return value is $ret"
+
+
+			
+
+
+
+						ARRAY
+
+#!/bin/bash
+index_array=(1 2 3 4 5 6 7 8 9 0)
+for i in ${index_array[@]}
+do
+   echo $i
+done
+
+
+#By Using while-loop
+arr=(1 2 3 4 5 )
+i=0
+while [ $i -lt ${#arr[@]} ]
+do
+echo ${arr[$i]}
+ i=$[$i + 1]
+done
+
+
+arr=(Rishi Rahul Rashi Hema Manish Abhi)
+# To print all elements of array
+echo ${arr[@]}       
+echo ${arr[*]}       
+echo ${arr[@]:0}    
+echo ${arr[*]:0}    
+
+
+#To count Length of in Array
+#To count the length of a particular element in Array.Use #(hash) to print length of particular element
+# Length of Particular element
+echo ${#arr[0]}        
+echo ${#arr}        
+
+
+#To delete index-1 element
+unset ARRAYNAME[1]
+
+
+#!/bin/bash
+arr=(1 2 3 4 5 6 7 8 9 0)
+echo "for loo....."
+for i in  ${arr[@]}
+do
+echo $i
+done
+echo "sum using while loo...."
+#i=0
+let "i=0"
+let "sum=0"
+while [[ $i -lt ${#arr[@]} ]]
+do
+let "sum = sum+i"
+#i=$[$i+1]
+let "i = i+1"
+done
+echo "sum is:  $sum"
+
+
+			
+
+					RCS
+
+1. touch test - RCS -I TEST
+2. ci test --- delete last revision file and create a new revision file.
+3. co test --- extract latest version of test file
+4. co -l test --- before editing the file, we have to lock the file
+5. nano test ---- to edit the file
+6. rcsdiff -------to know the current changes you have made... rekmember last chaneg is not updated in the file 
+7. ci test ------- to append the last change, and this file delete the last file and create a new revision file.
+to make frther changes or revisoions repete steps from 3-7
+rlog test --- view logs
+rcsdiff -r1.2 -r1.4 test ------- to get the changes made bw second and fourth revision
+
+or
+
+step 1: create a new file(ex : touch file.txt)
+step 2: rcs -i filename
+step 3: add the content inside the file
+step 4: ci filename (write some text and enter then press dot & enter again)
+step 5: co filename
+step 6: co -l filename(To lock the file version)
+step 7: add or delete  content inside the file and save
+step 8: repeat step-4 again
+step 9: repeat step-5,6,7.
+if you want to know about the particular version updation then you can use 
+command (ex: co -r1.1 filename).
+you can show all version description (ex: rlog filename)
+you can compare two version (ex : rcs diff -r1.1 -r1.2 filename)
+
+
+
+
+
+
+					MAKE FILE
+
+create
+1. cal.c
+2. add.c
+3. sub.c
+gcc -c cal.c
+gcc -c add.c
+gcc -c sub.c
+gcc -o calculator cal.o add.o sub.o
+./calculator 
+
+calculator: cal.o  add.o sub.o
+	gcc -o calculator cal.o add.o sub.o
+cal.o: cal.c
+	gcc -c cal.c
+add.o: add.c
+	gcc -c add.c
+sub.o: sub.c
+	gcc -c sub.c
+
+
+
+
+#include<stdio.h>
+extern void add(int x, int y);
+extern void sub(int x, int y);
+
+int main()
+{
+int x=5, y=3;
+
+add(x,y);
+sub(x,y);
+printf("exected the file\n");
+}
+
+
+#include<stdio.h>
+void add(int a, int b)
+{
+int sum;
+sum=a+b;
+printf("sum is %d \n", sum);
+}
+
+
+#include<stdio.h>
+void sub(int a, int b)
+{
+int sub;
+sub=a-b;
+printf("subtracted %d\n", sub);
+}
+
+
+
+
+				MAN - AGE
+
+.\" Manpage for test
+.\" contact abc@email.com for errors
+.TH man 8 "06 May 2023" "1.0" "test man page"
+.SH NAME
+test \-  test a file
+.SH SYNOpSISs
+test [filename]
+.SH DESCRIpTION
+test is used to test the file type
+.SH OpTION
+does not take option
+.SH SEE ALSO
+-f -d file test options
+.SH BUGS
+no known bugs
+.SH AUTHOR
+abhishek
+.B OKK
+.I OKK
+
+
+					
+
+
+					GITHUB
+
+
+git
+  190  git --version
+  191  mkdir gitdir
+  192  ls
+  193  cd gitdir
+  194  nano a
+  195  git status
+  196  git add a
+  197  git init
+  198  git add a
+  199  git status
+  200  git commit -m "first commit of file a"
+  201  git status
+  202  git log
+  203  git branch
+  204  git branch raj
+  205  git branch
+  206  git switch raj
+  207  git switch master
+  208  git log
+  209  git switch raj
+  210  git log
+  211  nano rajfile
+  212  git status
+  213  git add rajfile
+  214  git status
+  215  git commit -m "raj file first commit"
+  216  git log
+  217  nano rajfile
+  218  git add rajfile
+  219  git commit -m "raj file second commit"
+  220  git lofg
+  221  git log
+  222  git checkout master
+  223  git branch abhay
+  224  git switch abhay
+  225  git status
+  226  git log
+  227  nano abhayfile
+  228  git add abhayfile
+  229  git commit -m "ashkfjhilhie"
+  230  git status
+  231  git log
+  232  git branch
+  233  git merge raj
+  234  git log
+  235  ls
+  236  git branch master
+  237  git log
+  238  git switch master
+  239  git log
+  240  git merge abhay
+  241  git log
+  242  ls
+  243  ssh-keygen
+  244  ssh-keygen
+  245  cat /c/User/Abhishek Kumar/.ssh/id_rsa.pub
+  246  ssh-keygen
+  247  ssh-keygen
+  248  cat /c/Users/Abhishek Kumar/.ssh/id_rsa.pub
+  249  cat ~/.ssh/id_rsa.pub
+  250  git remote add origin git@github.com:intogit/hiotort.git
+  251  git remote
+  252  git remote add origin git@github.com:intogit/hiotort.git
+  253  git origin
+  254  git --help
+  255  git init
+  256  git remote add origin git@github.com:intogit/hiotort.git
+  257  git add .
+  258  git status
+  259  git commit -m "initial commit"
+  260  git remote add origin git@github.com:intogit/hiotort.git
+  261  git push origin main
+  262  git remote add origin git@github.com:intogit/hiotort.git
+  263  git branch
+  264  git log
+  265  git remote
+  266  git remote add origin git@github.com:intogit/hiotort.git
+  267  git remote add origin git@github.com:intogit/hiotort.git
+  268  git branch -M main
+  269  git push origin main
+  270  git log
+  271  git branch
+  272  git push -u origin main
+  273  git switch abhay
+  274  ls
+  275  git switch raj
+  276  lsd
+  277  ls
+  278  nano rajnewfile
+  279  git add rajnewfile
+  280  gt commit -m "raj second file "
+  281  git commit -m "raj second file "
+  282  git log
+  283  ls
+  284  git switch master
+  285  git switch main
+  286  git push -u origin main
+  287  git merge rajh
+  288  git merge raj
+  289  git push -u origin main
+  290  ls
+  291  git pull
+  292  ls
+  293  history
